@@ -32,6 +32,7 @@ public class _1_Creating_And_Writing_CSV_File {
 
         // message method is coming from 'Methods' class
         // where is located in Utilities package.
+
         message("File is created !!!!! ");
 
 
@@ -39,6 +40,8 @@ public class _1_Creating_And_Writing_CSV_File {
     }
 
 
+    // this method is accepting 1 argument
+    // this argument is holding the name and the path the csv file.
 
     public static void addDataToCSV(String output) {
 
@@ -50,19 +53,20 @@ public class _1_Creating_And_Writing_CSV_File {
             // create FileWriter object using  'file' object as parameter
             FileWriter outputfile = new FileWriter(file);
 
-            // create CSVWriter with ',' as separator
-            CSVWriter writer = new CSVWriter(outputfile, ',',
+            // create CSVWriter with '|' as separator
+            CSVWriter writer = new CSVWriter(outputfile, '|',
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                     CSVWriter.DEFAULT_LINE_END);
 
             // variables   defined here
-            int id=0;
-            String firstName = "";
-            String lastName = "";
-            String gender = "";
-            LocalDate date;
-            String row ="";
+            int     id=0;
+            String  firstName = "";
+            String  lastName = "";
+            String  gender = "";
+            LocalDate dob;
+            String  row ="";
+            String  address="";
 
 
             // created a List which contains our row Data
@@ -71,7 +75,7 @@ public class _1_Creating_And_Writing_CSV_File {
 
             // created first row and stored into a first row of the ArrayList
             row = "ID" + "," + "Last Name" + "," +
-                            "First Name "+ ","+"Gender" + "," + "Date";
+                            "First Name "+ ","+"Gender" + "," + "Date of Birth" + "," + "address";
 
 
 
@@ -104,7 +108,9 @@ public class _1_Creating_And_Writing_CSV_File {
                 // createRandomDate Method is coming from Methods Class which is
                 //stored in Utiliies package
 
-                date = createRandomDate(1950,2010); // created sub-method
+                dob = createRandomDate(1950,2010); // created sub-method
+
+                address = faker.address().fullAddress();
 
 
                 // random Gender can not work properly according to the Name
@@ -115,7 +121,7 @@ public class _1_Creating_And_Writing_CSV_File {
 
 
                 row = id + "," + lastName + "," +
-                        firstName +"," + gender + "," + date;
+                        firstName +"," + gender + "," + dob + "," + address;
                 rowdata = row.split(",");
                 data.add(rowdata);
                 System.out.println(row);

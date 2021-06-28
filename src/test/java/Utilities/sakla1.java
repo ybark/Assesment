@@ -16,7 +16,7 @@ import java.util.Scanner;
 import static Utilities.Methods.createRandomDate;
 import static Utilities.Methods.message;
 
-public class sakla{
+public class sakla1 {
 
 
     // file path never change out of the class

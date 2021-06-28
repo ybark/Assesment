@@ -23,25 +23,42 @@ public class _3_Reading_Log_File {
         content = readLogFile();
         List<String> group = new ArrayList<>();
 
-
-        //System.out.println(Arrays.toString(group.toArray()));
-
-//
-//        System.out.println(Arrays.toString(content.toArray()));
-//        System.out.println("content.size() = " + content.size());
+        String allErrorsNumber = "200 201 202 204 300 400 401 403 404 405 500 501 502 503";
+        String errorType ="";
+        Boolean errorEntry = true;
 
 
-        // asking the errorCode for checking
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Which Error Message you want to check ");
-        String errorType = sc.next();
+        while (errorEntry) {
+            // asking the errorCode for checking
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Which Error Message you want to check  < <Q> for exit>");
+            errorType = sc.next();
+            if (errorType.equalsIgnoreCase("Q")) {
+                System.exit(0);
+            }
+            if (errorType.length()==3 && allErrorsNumber.contains(errorType)) {
 
-        System.out.println("how many times should be occured  ");
-        int errorOcured = Integer.parseInt(sc.nextLine());
+                errorEntry= false;
+
+            } else
+            System.out.println("invalid entry please try again ");
+
+        }
+
+
+
 
 
         System.out.println("----------");
-        System.out.println(errorType + " means  ==> " + errorType);
+        System.out.println("Error  Type you want to check is " + errorType);
+
+        String errorDefinition = ConfigurationReader.getProperty(errorType);
+
+
+        System.out.println("Error Definition is ==> " + errorDefinition);
+        System.out.println();
+        System.out.println("----------");
+
 
 
         int innerCount = 0;
@@ -59,9 +76,10 @@ public class _3_Reading_Log_File {
             } else {innerCount = 0;}
 
             if (innerCount == 0 && errorCount >= 5 ) {
-                for(int a=0; a< group.size(); a++) {
-                    System.out.println(group.get(a));
-                }
+                readErrorArrayList(group);
+//                for(int a=0; a< group.size(); a++) {
+//                    System.out.println(group.get(a));
+//                }
                 System.out.println("--------------");
                 System.out.println("errorCount = " + errorCount);
                 System.out.println("--------------");
@@ -80,22 +98,17 @@ public class _3_Reading_Log_File {
         }
 
         if (group.size()>=5){
-            for(int a=0; a< group.size(); a++) {
-                System.out.println(group.get(a));
-            }
+            readErrorArrayList(group);
+
             System.out.println("--------------");
             System.out.println("errorCount = " + errorCount);
             System.out.println("--------------");
         }
 
-            System.out.println("Total " + errorType + " error occured " + totalCount
+            System.out.println("total number of occurrences of <" + errorType + " " +
+                    errorDefinition + "> in the log file is ==> " + totalCount
                     + " times");
 
-
-            // Message method is accepting 1 argument
-            // this argument is holding the message text
-            //String messageBody = " file  copied !!!! ";
-            //message(messageBody);
         }
 
         public static void writeError ( int groupCount, int loopCount,
@@ -129,6 +142,14 @@ public class _3_Reading_Log_File {
                         ("File could not read and written please check the path");
             }
             return content;
+        }
+
+        public static void readErrorArrayList( List<String> group) {
+            for (String error:group) {
+                System.out.println(error);
+
+            }
+
         }
 
 
