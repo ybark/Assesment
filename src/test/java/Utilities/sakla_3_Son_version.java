@@ -1,16 +1,12 @@
-package com.careCentrix;
+package Utilities;
 
-import Utilities.ConfigurationReader;
-
-
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class _3_Reading_Log_File {
-
+public class sakla_3_Son_version {
 
     public static void main(String[] args) {
 
@@ -37,7 +33,7 @@ public class _3_Reading_Log_File {
                 errorEntry= false;
 
             } else
-            System.out.println("invalid entry please try again ");
+                System.out.println("invalid entry please try again ");
 
         }
 
@@ -56,12 +52,12 @@ public class _3_Reading_Log_File {
 
         int occur = 0;
 
-            // asking number of occurency the error codes
-            System.out.println("What should be the minimum occurance < [0] for exit >");
-            occur = sc.nextInt();
-            if (occur == 0) {
-                System.exit(0);
-            }
+        // asking number of occurency the error codes
+        System.out.println("What should be the minimum occurance < [0] for exit >");
+        occur = sc.nextInt();
+        if (occur == 0) {
+            System.exit(0);
+        }
 
         System.out.println("----------");
 
@@ -69,7 +65,7 @@ public class _3_Reading_Log_File {
 
 
         int innerCount = 0; // this variable controls the changing
-                            // of the error codes from the log files
+        // of the error codes from the log files
         int errorCount = 0; // it counts the occurence  of the error codes
         int totalCount = 0; // it counts the total occurence
 
@@ -93,11 +89,11 @@ public class _3_Reading_Log_File {
                 errorCount = 0;
 
             } else
-                    if (innerCount == 0 && errorCount < occur ){
+            if (innerCount == 0 && errorCount < occur ){
 
-                         group.clear();
-                         errorCount = 0;
-                   }
+                group.clear();
+                errorCount = 0;
+            }
 
 
         }
@@ -113,52 +109,44 @@ public class _3_Reading_Log_File {
             System.out.println("--------------");
         }
 
-            System.out.println("total number of occurrences of <" + errorType + " " +
-                    errorDefinition + "> in the log file is ==> " + totalCount
-                    + " times");
-
-        }
-
-
-        // This method is reading the log file and storing into a List
-        public static List<String> readLogFile () {
-
-            // first file's name which will be read,
-            // and its path is coming from configuration.property file
-            String firstFile = ConfigurationReader.getProperty("logFile");
-
-            List<String> content = new ArrayList<>();
-
-            try (BufferedReader br = new BufferedReader(new FileReader(firstFile))) {
-                String line = "";
-                while ((line = br.readLine()) != null) {
-                    content.add(line);
-//                System.out.println(line);
-                }
-
-            } catch (Exception e) {
-                System.out.println
-                        ("File could not read and written please check the path");
-            }
-            return content;
-        }
-
-
-        // This Method is reading the records from List
-        // and printing on the screen if the
-        // the conditions match with the requirements
-        public static void readErrorFromArrayList(List<String> group) {
-            for (String error:group) {
-                System.out.println(error);
-
-            }
-
-        }
-
+        System.out.println("total number of occurrences of <" + errorType + " " +
+                errorDefinition + "> in the log file is ==> " + totalCount
+                + " times");
 
     }
 
 
+    // This method is reading the log file and storing in a List
+    public static List<String> readLogFile () {
+
+        // first file's name which will be read,
+        // and its path is coming from configuration.property file
+        String firstFile = ConfigurationReader.getProperty("logFile");
+
+        List<String> content = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(firstFile))) {
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                content.add(line);
+//                System.out.println(line);
+            }
+
+        } catch (Exception e) {
+            System.out.println
+                    ("File could not read and written please check the path");
+        }
+        return content;
+    }
 
 
+    // This Methos is reading the records from List if the
+    // the conditions match with the requirements
+    public static void readErrorFromArrayList(List<String> group) {
+        for (String error:group) {
+            System.out.println(error);
 
+        }
+
+    }
+}
