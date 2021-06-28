@@ -7,12 +7,17 @@ import static Utilities.Methods.*;
 
 
 
+// In this Class I have called the methods from method class where I store
+// this file under Utility package. Just like POM  I  called only related method
+// to keep my class more organised.
+
+
 public class _2_Read_And_Write_CSV {
 
 
    // CSV_FILE_PATH variable's value is coming from Configuration.properties file
    // this variable is holding the name of the  copied file's name
-   // and its path o
+   // and its path
    private static final
     String CSV_FILE_PATH = ConfigurationReader.getProperty("secondFile");
 
@@ -36,12 +41,6 @@ public class _2_Read_And_Write_CSV {
         message(messageBody);
 
 
-
-
-
-
     }
-
-
 
 }

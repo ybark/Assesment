@@ -8,10 +8,9 @@ import java.util.*;
 import Utilities.ConfigurationReader;
 import static Utilities.Methods.*;
 
-import Utilities.Methods;
+
 import com.github.javafaker.Faker;
 import com.opencsv.CSVWriter;
-import org.testng.annotations.Test;
 
 public class _1_Creating_And_Writing_CSV_File {
 
@@ -26,22 +25,23 @@ public class _1_Creating_And_Writing_CSV_File {
 
 
 
+
+    // Everything is turning in the methods.
+    // I have store the most of the methods here in this file
+    // but in _2_Read_And_Write_CSV class I called the methods
+    // from Utility package.
+
     public static void main(String[] args)
     {
         addDataToCSV(CSV_FILE_PATH);
-
-        // message method is coming from 'Methods' class
-        // where is located in Utilities package.
-
-        message("File is created !!!!! ");
-
 
 
     }
 
 
+
     // this method is accepting 1 argument
-    // this argument is holding the name and the path the csv file.
+    // this argument is holding the name and the path of  the csv file.
 
     public static void addDataToCSV(String output) {
 
@@ -74,6 +74,7 @@ public class _1_Creating_And_Writing_CSV_File {
 
 
             // created first row and stored into a first row of the ArrayList
+            // just for clarification what was this CSV file about
             row = "ID" + "," + "Last Name" + "," +
                             "First Name "+ ","+"Gender" + "," + "Date of Birth" + "," + "address";
 
@@ -104,13 +105,15 @@ public class _1_Creating_And_Writing_CSV_File {
 
                 lastName = faker.name().lastName();
 
+                address = faker.address().fullAddress();
+
 
                 // createRandomDate Method is coming from Methods Class which is
                 //stored in Utiliies package
 
                 dob = createRandomDate(1950,2010); // created sub-method
 
-                address = faker.address().fullAddress();
+
 
 
                 // random Gender can not work properly according to the Name

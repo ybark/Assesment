@@ -1,23 +1,19 @@
 package com.careCentrix;
 
 import Utilities.ConfigurationReader;
-import com.opencsv.CSVWriter;
-import org.testng.annotations.Test;
 
 
 import java.io.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import static Utilities.Methods.*;
 
 public class _3_Reading_Log_File {
 
 
     public static void main(String[] args) {
+
         // creating List for storing all data from CSV file
         List<String> content = new ArrayList<>();
         content = readLogFile();
@@ -26,12 +22,12 @@ public class _3_Reading_Log_File {
         String allErrorsNumber = "200 201 202 204 300 400 401 403 404 405 500 501 502 503";
         String errorType ="";
         Boolean errorEntry = true;
-
+        Scanner sc = new Scanner(System.in);
 
         while (errorEntry) {
+
             // asking the errorCode for checking
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Which Error Message you want to check  < <Q> for exit>");
+            System.out.println("Which Error Message you want to check  < {Q} for exit >");
             errorType = sc.next();
             if (errorType.equalsIgnoreCase("Q")) {
                 System.exit(0);
@@ -45,25 +41,37 @@ public class _3_Reading_Log_File {
 
         }
 
+        System.out.println("Error  number you want to check is " + errorType);
 
 
-
-
-        System.out.println("----------");
-        System.out.println("Error  Type you want to check is " + errorType);
-
+        // I stored all the error codes in Configuraion.property file.
+        // we can  store all the error codes into an MAP also.
+        // using error codes as a key we can call the definition of the error codes from MAP
         String errorDefinition = ConfigurationReader.getProperty(errorType);
-
 
         System.out.println("Error Definition is ==> " + errorDefinition);
         System.out.println();
         System.out.println("----------");
 
 
+        int occur = 0;
 
-        int innerCount = 0;
-        int errorCount = 0;
-        int totalCount = 0;
+            // asking number of occurency the error codes
+            System.out.println("What should be the minimum occurance < [0] for exit >");
+            occur = sc.nextInt();
+            if (occur == 0) {
+                System.exit(0);
+            }
+
+        System.out.println("----------");
+
+
+
+
+        int innerCount = 0; // this variable controls the changing
+                            // of the error codes from the log files
+        int errorCount = 0; // it counts the occurence  of the error codes
+        int totalCount = 0; // it counts the total occurence
 
         for (int i = 0; i < content.size(); i++) {
             if (content.get(i).contains(errorType)) {
@@ -75,11 +83,9 @@ public class _3_Reading_Log_File {
 
             } else {innerCount = 0;}
 
-            if (innerCount == 0 && errorCount >= 5 ) {
-                readErrorArrayList(group);
-//                for(int a=0; a< group.size(); a++) {
-//                    System.out.println(group.get(a));
-//                }
+            if (innerCount == 0 && errorCount >= occur ) {
+                readErrorFromArrayList(group);
+
                 System.out.println("--------------");
                 System.out.println("errorCount = " + errorCount);
                 System.out.println("--------------");
@@ -87,18 +93,20 @@ public class _3_Reading_Log_File {
                 errorCount = 0;
 
             } else
+                    if (innerCount == 0 && errorCount < occur ){
 
-            if (innerCount == 0 && errorCount < 5 ){
-
-                group.clear();
-                errorCount = 0;
-            }
+                         group.clear();
+                         errorCount = 0;
+                   }
 
 
         }
 
-        if (group.size()>=5){
-            readErrorArrayList(group);
+        // This block is controlling the accurence after the loop.
+        // without adding this if block program is giving wrong result.
+
+        if (group.size()>= occur){
+            readErrorFromArrayList(group);
 
             System.out.println("--------------");
             System.out.println("errorCount = " + errorCount);
@@ -111,17 +119,8 @@ public class _3_Reading_Log_File {
 
         }
 
-        public static void writeError ( int groupCount, int loopCount,
-        List<String> content  ){
 
-            System.out.println("Related Error records are ");
-            System.out.println("--------------------------");
-            for (int a = (loopCount - groupCount); a < loopCount; a++) {
-                System.out.println(content.get(a));
-            }
-        }
-
-
+        // This method is reading the log file and storing in a List
         public static List<String> readLogFile () {
 
             // first file's name which will be read,
@@ -144,7 +143,10 @@ public class _3_Reading_Log_File {
             return content;
         }
 
-        public static void readErrorArrayList( List<String> group) {
+
+        // This Methos is reading the records from List if the
+        // the conditions match with the requirements
+        public static void readErrorFromArrayList(List<String> group) {
             for (String error:group) {
                 System.out.println(error);
 
